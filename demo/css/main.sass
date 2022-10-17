@@ -1,6 +1,7 @@
 $content_font: 'Roboto'
 $text_accent: #ff0255
 $text_accent_secondary: #ff022c
+$text_secondary: #999
 
 body
   background-color: #000116
@@ -19,10 +20,15 @@ body
     padding: 20px 40px 20px 40px
   .container h2
      width: 100%
-     margin-bottom: 40px
+     margin-bottom: 20px
      font-family: 'Roboto'
      color: #fff
      font-size: 35px
+  .container h2 + p
+    margin-bottom: 30px
+    font-size: 12px
+    font-family: $content_font
+    color: $text_secondary
   p
     font-family: $content_font
   form
