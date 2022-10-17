@@ -16,6 +16,7 @@ class User
 {
 
   protected $dbh;
+  protected $users_table = 'users';
 
   protected $username;
   protected $email;
@@ -28,7 +29,7 @@ class User
 
   public function __construct(PDO $dbh)
   {
-    $this->dbh = $PDO
+    $this->dbh = $dbh;
   }
 
   public function set($argk, $argv = null)
@@ -52,6 +53,30 @@ class User
   public function register()
   {
     // @TODO
+    if(!empty($this->$username))
+    {
+      $r = $dbh->prepare('SELECT COUNT(id) FROM ' . $this->users_table . ' WHERE username = :username');
+      $r->bindValue(':username', $this->username, PDO::PARAM_INT);
+      if(count($res->fetchAll()))
+      {
+        // Username already in use
+        return -1;
+      }
+      else
+      {
+        // Register new user account
+        $r->closeCursor();
+        $r = $this->dbh->prepare('INSERT INTO ' . $this->users_table . ' VALUES(NULL, :username, :email, :password, :active, :registration_time, :last_logged_in)');
+        $r->bindValue(':username', $this->username, PDO::PARAM_STR);
+        $r->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $r->bindValue(':password', password_hash($this->password, PASSWORD_BCRYPT));
+        $r->bindValue(':active', 1, PDO::PARAM_INT);
+        $r->bindValue(':registration_time', time(), PDO::PARAM_INT);
+        $r->bindValue(':last_logged_in', 0, PDO::PARAM_INT);
+        return $d->execute();
+      }
+    }
+
   }
 
   public function login()
