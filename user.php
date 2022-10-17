@@ -1,11 +1,35 @@
 <?php
+/*
++-------------------+--------------+------+-----+---------+----------------+
+| Field             | Type         | Null | Key | Default | Extra          |
++-------------------+--------------+------+-----+---------+----------------+
+| id                | int(11)      | NO   | PRI | NULL    | auto_increment |
+| username          | varchar(255) | NO   |     | NULL    |                |
+| email             | varchar(255) | NO   |     | NULL    |                |
+| password          | varchar(255) | NO   |     | NULL    |                |
+| active            | int(1)       | NO   |     | NULL    |                |
+| registration_time | int(11)      | NO   |     | NULL    |                |
+| last_logged_in    | int(11)      | NO   |     | NULL    |                |
++-------------------+--------------+------+-----+---------+----------------+
+*/
 class User
 {
+
+  protected $dbh;
+
   protected $username;
   protected $email;
   protected $password;
+  protected $active;
+  protected $registration_time;
+  protected $last_logged_in;
 
-  protected $setterAllowedValues = ['username', 'email', 'password'];
+  protected $setterAllowedValues = ['username', 'email', 'password', 'active', 'registration_time', 'last_logged_in'];
+
+  public function __construct(PDO $dbh)
+  {
+    $this->dbh = $PDO
+  }
 
   public function set($argk, $argv = null)
   {
@@ -32,8 +56,7 @@ class User
 
   public function login()
   {
-    // @TODO 
+    // @TODO
   }
-
 }
 // EOF
