@@ -1,0 +1,62 @@
+$content_font: 'Roboto'
+$text_accent: #ff0255
+$text_accent_secondary: #ff022c
+
+body
+  background-color: #000116
+  .smlr
+    font-size: 12.5px
+    line-height: 1.3em
+    color: #999
+  .medium
+    font-weight: 700
+  .container
+    width: 500px
+    margin: auto
+    margin-top: 30px
+    background-color: #000
+    color: #fff
+    padding: 20px 40px 20px 40px
+  .container h2
+     width: 100%
+     margin-bottom: 40px
+     font-family: 'Roboto'
+     color: #fff
+     font-size: 35px
+  p
+    font-family: $content_font
+  form
+    label
+      display: block
+      margin-bottom: 10px
+      margin-top: 10px
+      font-family: $content_font
+    input[type="text"], input[type="password"]
+      margin-top: 15px
+      margin-bottom: 15px
+      width: 450px
+      height: 20px
+      padding: 20px
+      font-family: $content_font
+      font-size: 18px
+    input[type="submit"]
+      width: 100%
+      background-color: $text_accent
+      border: 0
+      color: #fff
+      padding: 20px
+      margin-top: 30px
+      font-weight: 600
+      font-family: $content_font
+      font-size: 15px
+      &:hover
+        background-color: $text_accent_secondary
+        cursor: pointer
+
+  .create_account
+    width: 100%
+    margin-top: 40px
+    text-align: right
+    a
+      text-decoration: none
+      font-size: 12px

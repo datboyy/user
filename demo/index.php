@@ -20,14 +20,13 @@ $User = (new User($dbh))
 
 
 // Login
-if(!isset($_GET['register']))
+if(isset($_GET['register']))
 {
-
-
+  require 'templates/register.html';
 }
 // Register
 else
 {
-
+  require 'templates/login.html';
 }
-// EOF 
+// EOF
