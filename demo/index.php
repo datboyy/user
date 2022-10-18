@@ -29,6 +29,14 @@ if(isset($_GET['register']))
 // Login
 else
 {
+  if(isset($_POST['username'], $_POST['password']))
+  {
+    $templateVars[] = ['login_success', (new User($dbh))->set($_POST)
+                                                        ->login()];
+    echo '<pre>';
+    var_dump($templateVars);
+    echo '</pre>';
+  }
   require 'templates/login.html';
 }
 // EOF

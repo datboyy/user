@@ -14,9 +14,10 @@
 */
 class User
 {
-
   protected $dbh;
   protected $users_table = 'users';
+
+  protected $setterAllowedValues = ['username', 'email', 'password', 'active', 'registration_time', 'last_logged_in'];
 
   protected $username;
   protected $email;
@@ -24,8 +25,6 @@ class User
   protected $active;
   protected $registration_time;
   protected $last_logged_in;
-
-  protected $setterAllowedValues = ['username', 'email', 'password', 'active', 'registration_time', 'last_logged_in'];
 
   public function __construct(PDO $dbh)
   {
@@ -57,13 +56,12 @@ class User
 
   public function register()
   {
-    // @TODO
     if(!empty($this->username))
     {
       $r = $this->dbh->prepare('SELECT COUNT(id) AS nbr FROM ' . $this->users_table . ' WHERE username = :username');
       $r->bindValue(':username', $this->username, PDO::PARAM_INT);
       $d = $r->execute();
-      $res = $r->fetch();
+      $res = $r->fetch(PDO::FETCH_ASSOC);
       if($res['nbr'])
       {
         // Username already in use
@@ -76,7 +74,7 @@ class User
         $r = $this->dbh->prepare('INSERT INTO ' . $this->users_table . ' VALUES(NULL, :username, :email, :password, :active, :registration_time, :last_logged_in)');
         $r->bindValue(':username', $this->username, PDO::PARAM_STR);
         $r->bindValue(':email', $this->email, PDO::PARAM_STR);
-        $r->bindValue(':password', password_hash($this->password, PASSWORD_BCRYPT));
+        $r->bindValue(':password', password_hash($this->password, PASSWORD_BCRYPT), PDO::PARAM_STR);
         $r->bindValue(':active', 1, PDO::PARAM_INT);
         $r->bindValue(':registration_time', time(), PDO::PARAM_INT);
         $r->bindValue(':last_logged_in', 0, PDO::PARAM_INT);
@@ -85,12 +83,33 @@ class User
         return $r->execute();
       }
     }
-
   }
 
   public function login()
   {
-    // @TODO
+    if(!empty($this->username) && !empty($this->password))
+    {
+      $r = $this->dbh->prepare('SELECT id, username, password FROM ' . $this->users_table . ' WHERE username = :username');
+      $r->bindValue(':username', $this->username, PDO::PARAM_STR);
+      $d = $r->execute();
+      $res = $r->fetch(PDO::FETCH_ASSOC);
+      if(!$res)
+      {
+        // This user does not exist
+        return -1;
+      }
+      else
+      {
+        if(password_verify($this->password, $res['password']))
+        {
+          session_regenerate_id();
+          array_merge($_SESSION, $res);
+          return 1;
+        }
+        return 0;
+      }
+      $r->closeCursor();
+    }
   }
 }
 // EOF

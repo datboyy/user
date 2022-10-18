@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $username = 'root';
 $password = '';
 $database = 'dummy';
@@ -10,4 +12,4 @@ catch(PDOException $e)
 {
   echo $e->getMessage();
 }
-// EOF 
+// EOF
