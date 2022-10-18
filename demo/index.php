@@ -33,9 +33,6 @@ else
   {
     $templateVars[] = ['login_success', (new User($dbh))->set($_POST)
                                                         ->login()];
-    echo '<pre>';
-    var_dump($templateVars);
-    echo '</pre>';
   }
   require 'templates/login.html';
 }
