@@ -45,26 +45,33 @@ class User
     {
       if(in_array($argk, $this->setterAllowedValues))
       {
-        $this->{$argk} = $argv;
+        $this->{$argk} = $argv; // store value
+      }
+      else
+      {
+        throw new Exception(__METHOD__ . ' : invalid arg key `' . $argk . '`'); // invalid $argk
       }
     }
+    return $this;
   }
 
   public function register()
   {
     // @TODO
-    if(!empty($this->$username))
+    if(!empty($this->username))
     {
-      $r = $dbh->prepare('SELECT COUNT(id) FROM ' . $this->users_table . ' WHERE username = :username');
+      $r = $this->dbh->prepare('SELECT COUNT(id) AS nbr FROM ' . $this->users_table . ' WHERE username = :username');
       $r->bindValue(':username', $this->username, PDO::PARAM_INT);
-      if(count($res->fetchAll()))
+      $d = $r->execute();
+      $res = $r->fetch();
+      if($res['nbr'])
       {
         // Username already in use
+        $r->closeCursor();
         return -1;
       }
       else
       {
-        // Register new user account
         $r->closeCursor();
         $r = $this->dbh->prepare('INSERT INTO ' . $this->users_table . ' VALUES(NULL, :username, :email, :password, :active, :registration_time, :last_logged_in)');
         $r->bindValue(':username', $this->username, PDO::PARAM_STR);
@@ -73,7 +80,9 @@ class User
         $r->bindValue(':active', 1, PDO::PARAM_INT);
         $r->bindValue(':registration_time', time(), PDO::PARAM_INT);
         $r->bindValue(':last_logged_in', 0, PDO::PARAM_INT);
-        return $d->execute();
+        //
+        // Register new user account
+        return $r->execute();
       }
     }
 
