@@ -1,7 +1,11 @@
 $content_font: 'Roboto'
 $text_accent: #ff0255
 $text_accent_secondary: #ff022c
+
 $text_secondary: #999
+$text_secondary_light: #ccc
+
+$primary_links_color: blue
 
 body
   background-color: #000116
@@ -31,17 +35,21 @@ body
     color: $text_secondary
   p
     font-family: $content_font
+  a
+    color: $primary_links_color
   form
     label
       display: block
       margin-bottom: 10px
       margin-top: 10px
       font-family: $content_font
-    input[type="text"], input[type="password"]
-      margin-top: 15px
+      font-size: 15px
+      color: $text_secondary_light
+    input[type="text"], input[type="password"], input[type="email"]
+      margin-top: 5px
       margin-bottom: 15px
       width: 450px
-      height: 20px
+      height: 10px
       padding: 20px
       font-family: $content_font
       font-size: 18px
@@ -51,10 +59,10 @@ body
       border: 0
       color: #fff
       padding: 20px
-      margin-top: 30px
+      margin-top: 20px
       font-weight: 600
       font-family: $content_font
-      font-size: 15px
+      font-size: 14px
       &:hover
         background-color: $text_accent_secondary
         cursor: pointer
