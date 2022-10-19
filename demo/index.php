@@ -3,10 +3,16 @@ require '../config.php';
 require '../user.php';
 // Template variables
 $templateVars = [];
-// Logout controller process
-if(new Users($dbh))->isLoggedIn())
+// User already logged in
+if((new User($dbh))->isLoggedIn())
 {
-  require 'templates/logout.php';
+  if(isset($_POST['logout']))
+  {
+    session_destroy();
+    header('Location: index.php');
+    exit();
+  }
+  require 'templates/logout.html';
 }
 // Register controller process
 elseif(isset($_GET['register']))
@@ -32,6 +38,13 @@ else
   if(isset($_POST['username'], $_POST['password']))
   {
     $templateVars[] = ['login_success', (new User($dbh))->set($_POST)->login()];
+    //
+    //
+    // @NOTE : Any redirection must be written here to prevent the end-user to be redirected to the logout page.
+    //
+    //
+    header('Location: index.php');
+    exit();
   }
   require 'templates/login.html';
 }

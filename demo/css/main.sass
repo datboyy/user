@@ -28,7 +28,7 @@ body
      font-family: 'Roboto'
      color: #fff
      font-size: 35px
-  .container h2 + p
+  .container h2 + p:not(.logout-message)
     margin-bottom: 30px
     font-size: 12px
     font-family: $content_font
@@ -46,6 +46,7 @@ body
       font-size: 15px
       color: $text_secondary_light
     input[type="text"], input[type="password"], input[type="email"]
+      width: 100%
       margin-top: 5px
       margin-bottom: 15px
       width: 450px
@@ -66,6 +67,11 @@ body
       &:hover
         background-color: $text_accent_secondary
         cursor: pointer
+
+  .logout-message
+     font-size: 15px
+     color: $text_secondary
+     margin-bottom: 0
 
   .create_account
     width: 100%
