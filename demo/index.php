@@ -1,12 +1,15 @@
 <?php
 require '../config.php';
 require '../user.php';
-//
 // Template variables
 $templateVars = [];
-//
-// Register
-if(isset($_GET['register']))
+// Logout controller process
+if(new Users($dbh))->isLoggedIn())
+{
+  require 'templates/logout.php';
+}
+// Register controller process
+elseif(isset($_GET['register']))
 {
   if(isset($_POST['email'], $_POST['username'], $_POST['password'], $_POST['password_confirmation']))
   {
@@ -14,9 +17,7 @@ if(isset($_GET['register']))
     {
       unset($_POST['password_confirmation']);
       $templateVars[] = ['password_missmatch', 0];
-      // Registers new user, passes result as template variable
-      $templateVars[] = ['register_success', (new User($dbh))->set($_POST)
-                                                             ->register()];
+      $templateVars[] = ['register_success', (new User($dbh))->set($_POST)->register()]; // register new user, pass result as template variable
     }
     else
     {
@@ -25,14 +26,12 @@ if(isset($_GET['register']))
   }
   require 'templates/register.html';
 }
-//
-// Login
+// Login controller process
 else
 {
   if(isset($_POST['username'], $_POST['password']))
   {
-    $templateVars[] = ['login_success', (new User($dbh))->set($_POST)
-                                                        ->login()];
+    $templateVars[] = ['login_success', (new User($dbh))->set($_POST)->login()];
   }
   require 'templates/login.html';
 }
