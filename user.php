@@ -112,7 +112,7 @@ class User
       {
         if(password_verify($this->password, $res['password']))
         {
-          // User is now logged in 
+          // User is now logged in
           session_regenerate_id();
           unset($res['password']);
           $_SESSION = array_merge($_SESSION, $res);
