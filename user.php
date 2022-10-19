@@ -31,7 +31,7 @@ class User
     $this->dbh = $dbh;
   }
 
-  public function set($argk, $argv = null)
+  public function set($argk, $argv = null) : object
   {
     if(is_array($argk))
     {
@@ -54,7 +54,7 @@ class User
     return $this;
   }
 
-  public function register()
+  public function register() : int
   {
     if(!empty($this->username))
     {
@@ -80,18 +80,28 @@ class User
         $r->bindValue(':last_logged_in', 0, PDO::PARAM_INT);
         //
         // Register new user account
-        return $r->execute();
+        return (int) $r->execute();
       }
     }
   }
 
-  public function login()
+  public function login() : int
   {
     if(!empty($this->username) && !empty($this->password))
     {
-      $r = $this->dbh->prepare('SELECT id, username, password FROM ' . $this->users_table . ' WHERE username = :username');
-      $r->bindValue(':username', $this->username, PDO::PARAM_STR);
-      $d = $r->execute();
+      if(filter_var($this->username, FILTER_VALIDATE_EMAIL))
+      {
+        // An email address is used to login
+        $r = $this->dbh->prepare('SELECT id, username, password FROM ' . $this->users_table . ' WHERE email = :email');
+        $r->bindValue(':email', $this->username, PDO::PARAM_STR);
+        $d = $r->execute();
+      }
+      else
+      {
+        $r = $this->dbh->prepare('SELECT id, username, password FROM ' . $this->users_table . ' WHERE username = :username');
+        $r->bindValue(':username', $this->username, PDO::PARAM_STR);
+        $d = $r->execute();
+      }
       $res = $r->fetch(PDO::FETCH_ASSOC);
       if(!$res)
       {
@@ -113,5 +123,16 @@ class User
       $r->closeCursor();
     }
   }
+
+  public function logout() : void
+  {
+    session_destroy();
+  }
+
+  public function isLoggedIn() : int
+  {
+    return isset($_SESSION['id'], $_SESSION['username']);
+  }
+
 }
 // EOF
