@@ -12,6 +12,10 @@
 | last_logged_in    | int(11)      | NO   |     | NULL    |                |
 +-------------------+--------------+------+-----+---------+----------------+
 */
+
+// @TODO : Count login attempt to avoid bots
+// @TODO : Implement "last_logged_in"
+
 class User
 {
   protected $dbh;
