@@ -12,7 +12,7 @@ if((new User($dbh))->isLoggedIn())
     header('Location: index.php');
     exit();
   }
-  require 'templates/logout.html';
+  require 'templates/logout.php';
 }
 // Register controller process
 elseif(isset($_GET['register']))
@@ -30,7 +30,7 @@ elseif(isset($_GET['register']))
       $templateVars[] = ['password_missmatch', 1];
     }
   }
-  require 'templates/register.html';
+  require 'templates/register.php';
 }
 // Login controller process
 else
@@ -46,6 +46,6 @@ else
     header('Location: index.php');
     exit();
   }
-  require 'templates/login.html';
+  require 'templates/login.php';
 }
 // EOF
