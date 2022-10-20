@@ -11,17 +11,18 @@
       <h2>Register</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
          Vivamus vehicula magna tortor, vitae porttitor ante dictum in. Quisque diam sapien.</p>
+
       <!-- Login form -->
       <form method="POST">
         <label>Email address :</label>
-        <input type="email" name="email" placeholder="Email address.." />
+        <input type="email" name="email" placeholder="Email address.." <?= !REGISTRATION_ENABLED ? 'disabled':'' ?>  />
         <label>Username :</label>
-        <input type="text" name="username" placeholder="Username.." />
+        <input type="text" name="username" placeholder="Username.." <?= !REGISTRATION_ENABLED ? 'disabled':'' ?>  />
         <label>Password :</label>
-        <input type="password" name="password" placeholder="Strong password.." />
+        <input type="password" name="password" placeholder="Strong password.." <?= !REGISTRATION_ENABLED ? 'disabled':'' ?> />
         <label>Password confirmation :</label>
-        <input type="password" name="password_confirmation" placeholder="Strong password again.." />
-        <input type="submit" value="Register" />
+        <input type="password" name="password_confirmation" placeholder="Strong password again.." <?= !REGISTRATION_ENABLED ? 'disabled':'' ?>  />
+        <input type="submit" value="Register" <?= !REGISTRATION_ENABLED ? 'disabled':'' ?> />
         <p class="create_account">
           <a href="index.php">Already have an account ?</a>
         </p>

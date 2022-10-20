@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+define('REGISTRATION_ENABLED', 0);
+
 $username = 'root';
 $password = '';
 $database = 'dummy';

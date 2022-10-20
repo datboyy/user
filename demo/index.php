@@ -17,17 +17,20 @@ if((new User($dbh))->isLoggedIn())
 // Register controller process
 elseif(isset($_GET['register']))
 {
-  if(isset($_POST['email'], $_POST['username'], $_POST['password'], $_POST['password_confirmation']))
+  if(!REGISTRATION_ENABLED)
   {
-    if($_POST['password'] == $_POST['password_confirmation'])
+    if(isset($_POST['email'], $_POST['username'], $_POST['password'], $_POST['password_confirmation']))
     {
-      unset($_POST['password_confirmation']);
-      $templateVars[] = ['password_missmatch', 0];
-      $templateVars[] = ['register_success', (new User($dbh))->set($_POST)->register()]; // register new user, pass result as template variable
-    }
-    else
-    {
-      $templateVars[] = ['password_missmatch', 1];
+      if($_POST['password'] == $_POST['password_confirmation'])
+      {
+        unset($_POST['password_confirmation']);
+        $templateVars[] = ['password_missmatch', 0];
+        $templateVars[] = ['register_success', (new User($dbh))->set($_POST)->register()]; // register new user, pass result as template variable
+      }
+      else
+      {
+        $templateVars[] = ['password_missmatch', 1];
+      }
     }
   }
   require 'templates/register.php';
