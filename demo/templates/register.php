@@ -12,7 +12,43 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
          Vivamus vehicula magna tortor, vitae porttitor ante dictum in. Quisque diam sapien.</p>
 
-      <!-- Login form -->
+      <?php
+      if(!empty($templateVars['register_success']) && $templateVars['register_success'] > 0)
+      {
+      ?>
+        <!-- Account has been created success -->
+        <div class="alert">
+          <div class="alert--success">
+            <span class="medium">Your account has been created, you can now login using the login form.</span>
+          </div> <!--/ .success -->
+        </div> <!-- ./alert -->
+
+      <?php
+      }
+      elseif(!empty($templateVars['register_success']) && $templateVars['register_success'] == -1)
+      {
+      ?>
+        <!-- Username already in use -->
+        <div class="alert">
+          <div class="alert--error">
+            <span class="medium">Username already in use, please pick another one.</span>
+          </div> <!-- /.error -->
+        </div> <!-- /.alert -->
+      <?php
+      }
+      elseif(!empty($templateVars['password_missmatch']) && $templateVars['password_missmatch'])
+      {
+      ?>
+        <!-- Password missmatch -->
+        <div class="alert">
+          <div class="alert--error">
+            <span class="medium">Password & password confirmation missmatch.</span>
+          </div> <!-- /.error -->
+        </div> <!-- /.alert -->
+      <?php
+      }
+      ?>
+      <!-- Register form -->
       <form method="POST">
         <label>Email address :</label>
         <input type="email" name="email" placeholder="Email address.." <?= !REGISTRATION_ENABLED ? 'disabled':'' ?>  />

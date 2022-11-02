@@ -5,6 +5,9 @@ $text_accent_secondary: #ff022c
 $text_secondary: #999
 $text_secondary_light: #ccc
 
+$success_bg_color: #02ff1a
+$error_bg_color: #ff0202
+
 $primary_links_color: blue
 
 body
@@ -83,3 +86,15 @@ body
     a
       text-decoration: none
       font-size: 12px
+
+/* Misc */
+.alert
+  color: #fff
+  font-family: $content_font
+  margin-bottom: 30px
+  .alert--success
+    padding: 20px
+    background-color: $success_bg_color
+  .alert--error
+    padding: 20px
+    background-color: $error_bg_color

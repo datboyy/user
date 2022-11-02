@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-define('REGISTRATION_ENABLED', 0);
+define('REGISTRATION_ENABLED', 1);
 
 $username = 'root';
 $password = '';

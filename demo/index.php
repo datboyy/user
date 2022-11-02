@@ -24,12 +24,11 @@ elseif(isset($_GET['register']))
       if($_POST['password'] == $_POST['password_confirmation'])
       {
         unset($_POST['password_confirmation']);
-        $templateVars[] = ['password_missmatch', 0];
-        $templateVars[] = ['register_success', (new User($dbh))->set($_POST)->register()]; // register new user, pass result as template variable
+        $templateVars['register_success'] = (new User($dbh))->set($_POST)->register(); // register new user, pass result as template variable
       }
       else
       {
-        $templateVars[] = ['password_missmatch', 1];
+        $templateVars['password_missmatch'] = 1;
       }
     }
   }
@@ -40,7 +39,7 @@ else
 {
   if(isset($_POST['username'], $_POST['password']))
   {
-    $templateVars[] = ['login_success', (new User($dbh))->set($_POST)->login()];
+    $templateVars[] = ['login_success' => (new User($dbh))->set($_POST)->login()];
     //
     //
     // @NOTE : Any redirection must be written here to prevent the end-user to be redirected to the logout page.
